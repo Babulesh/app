@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: hotel_db
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app/src
+      - DJANGO_SETTINGS_MODULE=hotel.settings
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = "Hotel Booking System"
+authors = ["Your Name <your.email@example.com>"]
+packages = [
+    { include = "hotel", from = "src" },
+    { include = "brone_hotel", from = "src/hotel/apps" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.2"
+psycopg2-binary = "^2.9"
+djangorestframework = "^3.14"
+pydantic-settings = "^2.9.1"
+python-dotenv = "^1.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-django = "^4.8"
+ruff = "^0.1.15"
+pre-commit = "^4.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+
+preview = true
+
+lint.select = [
+  "E",   # Pycodestyle (ошибки)
+  "F",   # Pyflakes (базовые проверки)
+  "I",   # isort (сортировка импортов)
+  "UP",  # pyupgrade (обновление синтаксиса)
+  "C90", # McCabe (сложность кода)
+  "B",   # bugbear (потенциальные баги)
+  "Q",   # flake8-quotes (кавычки)
+  "DJ",  # django (проверки для Django)
+]
+lint.ignore = ["E501"]
+
