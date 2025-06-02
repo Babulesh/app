@@ -21,7 +21,9 @@ def sample_room():
 @pytest.fixture
 def sample_booking(sample_room):
     return Booking.objects.create(
-        room=sample_room, date_start=date.today() + timedelta(days=1), date_end=date.today() + timedelta(days=3)
+        room=sample_room,
+        date_start=date.today() + timedelta(days=1),
+        date_end=date.today() + timedelta(days=3),
     )
 
 
@@ -79,7 +81,11 @@ def test_create_booking_invalid_dates(client, sample_room):
     ]
 
     for data, error_keyword in test_cases:
-        response = client.post(reverse("create_booking"), data=json.dumps(data), content_type="application/json")
+        response = client.post(
+            reverse("create_booking"),
+            data=json.dumps(data),
+            content_type="application/json",
+        )
         response_data = response.json()
 
         # Основные проверки

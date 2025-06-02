@@ -37,7 +37,9 @@ def test_create_room_invalid_data(client: APIClient):
     ]
 
     for data, expected_status in test_cases:
-        response = client.post(url, data=json.dumps(data), content_type="application/json")
+        response = client.post(
+            url, data=json.dumps(data), content_type="application/json"
+        )
         assert response.status_code == expected_status
         if expected_status == 400:
             response_data = response.json()
@@ -48,10 +50,14 @@ def test_create_room_invalid_data(client: APIClient):
 def test_list_rooms_sorting(client: APIClient):
     # Создаем тестовые данные
     HotelRoom.objects.create(
-        description="Budget Room", price_per_night=5000.00, created_at=timezone.now() - timedelta(days=1)
+        description="Budget Room",
+        price_per_night=5000.00,
+        created_at=timezone.now() - timedelta(days=1),
     )
 
-    HotelRoom.objects.create(description="Luxury Room", price_per_night=20000.00, created_at=timezone.now())
+    HotelRoom.objects.create(
+        description="Luxury Room", price_per_night=20000.00, created_at=timezone.now()
+    )
 
     # Тестируем разные варианты сортировки
     sort_cases = [

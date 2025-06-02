@@ -14,10 +14,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="HotelRoom",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("description", models.TextField(verbose_name="Описание номера")),
-                ("price_per_night", models.DecimalField(decimal_places=2, max_digits=10, verbose_name="Цена за ночь")),
-                ("created_at", models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата создания")),
+                (
+                    "price_per_night",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=10, verbose_name="Цена за ночь"
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="Дата создания"
+                    ),
+                ),
             ],
             options={
                 "verbose_name": "Номер отеля",
@@ -28,7 +46,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Booking",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("date_start", models.DateField(verbose_name="Дата заезда")),
                 ("date_end", models.DateField(verbose_name="Дата выезда")),
                 (

@@ -4,8 +4,12 @@ from django.utils import timezone
 
 class HotelRoom(models.Model):
     description = models.TextField(verbose_name="Описание номера")
-    price_per_night = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена за ночь")
-    created_at = models.DateTimeField(default=timezone.now, verbose_name="Дата создания")
+    price_per_night = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Цена за ночь"
+    )
+    created_at = models.DateTimeField(
+        default=timezone.now, verbose_name="Дата создания"
+    )
 
     class Meta:
         verbose_name = "Номер отеля"
@@ -17,7 +21,12 @@ class HotelRoom(models.Model):
 
 
 class Booking(models.Model):
-    room = models.ForeignKey(HotelRoom, on_delete=models.CASCADE, related_name="bookings", verbose_name="Номер отеля")
+    room = models.ForeignKey(
+        HotelRoom,
+        on_delete=models.CASCADE,
+        related_name="bookings",
+        verbose_name="Номер отеля",
+    )
     date_start = models.DateField(verbose_name="Дата заезда")
     date_end = models.DateField(verbose_name="Дата выезда")
 

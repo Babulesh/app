@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 def validate_required_fields(data, required_fields):
     missing_fields = [field for field in required_fields if field not in data]
     if missing_fields:
-        return JsonResponse({"error": f'Missing required fields: {", ".join(missing_fields)}'}, status=400)
+        return JsonResponse(
+            {"error": f'Missing required fields: {", ".join(missing_fields)}'},
+            status=400,
+        )
     return None
 
 
@@ -27,7 +30,9 @@ def create_room(request):
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON format"}, status=400)
 
-        error_response = validate_required_fields(data, ["description", "price_per_night"])
+        error_response = validate_required_fields(
+            data, ["description", "price_per_night"]
+        )
         if error_response:
             return error_response
 
@@ -38,7 +43,9 @@ def create_room(request):
         except (ValueError, TypeError):
             return JsonResponse({"error": "Invalid price format"}, status=400)
 
-        room = HotelRoom.objects.create(description=data["description"], price_per_night=price)
+        room = HotelRoom.objects.create(
+            description=data["description"], price_per_night=price
+        )
         return JsonResponse({"room_id": room.id}, status=201)
 
     except Exception as e:
@@ -119,7 +126,9 @@ def create_booking(request):
             room_id = int(data["room_id"])
             room = HotelRoom.objects.get(id=room_id)
         except (ValueError, TypeError):
-            return JsonResponse({"error": "room_id must be a valid integer"}, status=400)
+            return JsonResponse(
+                {"error": "room_id must be a valid integer"}, status=400
+            )
         except HotelRoom.DoesNotExist:
             return JsonResponse({"error": "Room not found"}, status=400)
 
@@ -128,18 +137,30 @@ def create_booking(request):
             date_end = datetime.strptime(data["date_end"], "%Y-%m-%d").date()
 
             if date_start < date.today():
-                return JsonResponse({"error": "Start date cannot be in the past"}, status=400)
+                return JsonResponse(
+                    {"error": "Start date cannot be in the past"}, status=400
+                )
 
             if date_end <= date_start:
-                return JsonResponse({"error": "End date must be after start date"}, status=400)
+                return JsonResponse(
+                    {"error": "End date must be after start date"}, status=400
+                )
 
         except ValueError:
-            return JsonResponse({"error": "Invalid date format (use YYYY-MM-DD)"}, status=400)
+            return JsonResponse(
+                {"error": "Invalid date format (use YYYY-MM-DD)"}, status=400
+            )
 
-        if Booking.objects.filter(room=room, date_start__lt=date_end, date_end__gt=date_start).exists():
-            return JsonResponse({"error": "Room is already booked for these dates"}, status=409)
+        if Booking.objects.filter(
+            room=room, date_start__lt=date_end, date_end__gt=date_start
+        ).exists():
+            return JsonResponse(
+                {"error": "Room is already booked for these dates"}, status=409
+            )
 
-        booking = Booking.objects.create(room=room, date_start=date_start, date_end=date_end)
+        booking = Booking.objects.create(
+            room=room, date_start=date_start, date_end=date_end
+        )
         return JsonResponse({"booking_id": booking.id}, status=201)
 
     except Exception as e:
