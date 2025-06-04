@@ -27,7 +27,7 @@ class AppSettings(BaseSettings):
     DB_PORT: int = 5432
     DB_NAME: str = "hotel_db"
     DB_USER: str = "user_admin"
-    DB_PASSWORD: str
+    DB_PASSWORD: str = DB_PASSWORD
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
@@ -47,7 +47,7 @@ SECRET_KEY = "django-insecure-lmjbx7^3k+ii4saizui&+v&sbz=fbo@rn()h@@%k%g=#l1gp1c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
