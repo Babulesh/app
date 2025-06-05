@@ -38,3 +38,4 @@ htmlcov/
 # БД и миграции (если не хотите коммитить)
 /migrations/*
 !/migrations/__init__.
+google-chrome-stable_current_amd64.deb
