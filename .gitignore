@@ -1,41 +1,43 @@
-# Общие системные и IDE файлы
 .DS_Store
 .idea/
 .vscode/
 *.swp
-*.swo
 *~
 
-# Python
 __pycache__/
 *.py[cod]
-.python-version
-*.egg-info/
+*.pyo
 *.egg
+*.egg-info/
 dist/
 build/
-.env
-.venv/
-venv/
-env/
+.cache/
+.poetry/
+poetry.lock      # ← оставьте, если хотите фиксировать зависимости
+.python-version
 
-# Django
+.venv*/           # .venv, .venv3.12, .venv_prod …
+venv*/
+env*/
+
+
 *.log
 local_settings.py
 db.sqlite3
-media/
 
-# Poetry
-poetry.lock
-# (но обычно poetry.lock коммитят, если не используете requirements.txt)
+**/migrations/*
+!**/migrations/__init__.py
 
-# Тесты и покрытие
 .coverage
 htmlcov/
 .pytest_cache/
-.mypy_cache/
 
-# БД и миграции (если не хотите коммитить)
-/migrations/*
-!/migrations/__init__.
-google-chrome-stable_current_amd64.deb
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+
+*.tar
+*.log
+
+postgres_data/

@@ -1,25 +1,48 @@
 services:
   db:
-    image: postgres:13
+    image: postgres:17
+    env_file: .env
     environment:
-      POSTGRES_DB: hotel_db
-      POSTGRES_USER: user_admin
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB:       ${POSTGRES_DB:-hotel_db}
+      POSTGRES_USER:     ${POSTGRES_USER:-user_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   web:
     build: .
     volumes:
       - .:/app
+    env_file: .env
     environment:
-      - PYTHONPATH=/app/src
-      - DJANGO_SETTINGS_MODULE=hotel.settings
-    command: python manage.py runserver 0.0.0.0:8000 --noreload
+      PYTHONPATH: /app/src
+      DJANGO_SETTINGS_MODULE: hotel.settings
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS:-3}
+    command:
+      - sh
+      - -c
+      - |
+        python manage.py migrate --noinput && \
+        gunicorn hotel.wsgi:application \
+          --bind 0.0.0.0:8000 \
+          --workers ${GUNICORN_WORKERS:-3} \
+          --threads 2 \
+          --timeout 60
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsSL", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
   postgres_data:

@@ -1,39 +1,44 @@
-[tool.poetry]
-name = "app"
-version = "0.1.0"
+[project]
+name        = "app"
+version     = "0.1.0"
 description = "Hotel Booking System"
-authors = ["Your Name <your.email@example.com>"]
-packages = [
-    { include = "hotel", from = "src" },
-    { include = "brone_hotel", from = "src/hotel/apps" }
+
+authors     = [
+  { name = "Your Name", email = "your.email@example.com" }
 ]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-Django = "^4.2"
-psycopg2-binary = "^2.9"
-djangorestframework = "^3.14"
-pydantic-settings = "^2.9.1"
-python-dotenv = "^1.1.0"
+readme              = "README.md"
+requires-python     = ">=3.12,<3.14"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.0"
-pytest-django = "^4.8"
-ruff = "^0.1.15"
-pre-commit = "^4.2.0"
+dependencies = [
+  "Django >=5.2,<6.0",
+  "psycopg[binary] ~=3.2",
+  "djangorestframework >=3.15,<4.0",
+  "pydantic-settings >=2.9,<3.0",
+  "python-dotenv >=1.1,<2.0",
+  "gunicorn >=22.0,<23.0",
+  "whitenoise (>=6.6,<7.0)",
+]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[project.optional-dependencies]
+dev = [
+  "pytest >=8.3,<9.0",
+  "pytest-django >=4.8,<5.0",
+  "ruff >=0.12,<0.13",
+  "pre-commit >=4.2,<5.0",
+]
+
+[tool.poetry]
+packages = [
+  { include = "hotel",       from = "src" },
+  { include = "brone_hotel", from = "src/hotel/apps" },
+]
 
 [tool.ruff]
 line-length = 120
-lint.select = [
-    "E",   # pycodestyle errors
-    "F",   # pyflakes
-    "I",   # isort
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
-]
+lint.select = ["E", "F", "I", "B", "C4", "UP"]
 lint.ignore = ["E501"]
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
