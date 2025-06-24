@@ -13,10 +13,10 @@ dist/
 build/
 .cache/
 .poetry/
-poetry.lock      # ← оставьте, если хотите фиксировать зависимости
+poetry.lock
 .python-version
 
-.venv*/           # .venv, .venv3.12, .venv_prod …
+.venv*/
 venv*/
 env*/
 

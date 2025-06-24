@@ -25,7 +25,7 @@ class AppSettings(BaseSettings):
 
     # ─── Django ─────────────────────────────────────────────────────────
     DJANGO_SECRET_KEY: str = "django-insecure-change-me"
-    DEBUG: bool = True
+    DEBUG: bool = False
     DJANGO_ALLOWED_HOSTS: str = "localhost 127.0.0.1"
 
     # ─── Gunicorn ───────────────────────────────────────────────────────
